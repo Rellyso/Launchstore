@@ -15,21 +15,20 @@ module.exports = {
             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING id
         `
+        
+        data.price = data.price.replace(/\D/, "")
+
         const values = [
             data.category_id,
-            1,
+            data.user_id || 1,
             data.name,
             data.description,
-            data.old_price,
+            data.old_price || data.price,
             data.price,
             data.quantity,
-            data.status,
+            data.status || 1,
         ]
 
-        db.query(query, values, function (err, results) {
-            if (err) throw `Database error!! ${err}`
-
-            callback(results.rows[0].id)
-        })
+        return db.query(query, values)
     }
 }
