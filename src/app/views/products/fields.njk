@@ -26,9 +26,7 @@
 <div class="item">
     <div>Descrição</div>
 
-    <textarea name="description" cols="30" rows="10">
-        {{ product.description }}
-    </textarea>
+    <textarea name="description" cols="30" rows="10">{{ product.description }}</textarea>
 </div>
 
 {# campo de foto #}
@@ -40,7 +38,7 @@
     name="price" 
     placeholder="digite o preço do produto" 
     value="{{ product.price }}"
-    {# máscara de dinheiro em reais #}
+    onkeydown= "Mask.apply(this, 'Mask.format')"
     >
 
     {% if product.price %}
