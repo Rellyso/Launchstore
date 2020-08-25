@@ -1,0 +1,45 @@
+{% extends "layout.njk"%}
+
+{% block content %}
+
+    <section class="container form">
+        <form id="form-update" method="POST" action="/products">
+
+            <div class="header">
+                <h3>Editar produto</h3>
+            </div>
+
+            <div class="fields">
+                {% include 'products/fields.njk' %}
+
+                <input type="hidden" name="id" value="{{ product.id }}">
+            </div>
+
+        </form>
+
+        <div class="submit-buttons-container">
+            <button form="form-update" type="submit" class="button edit">Atualizar</button>
+            <button form="form-delete" type="submit" class="button delete">Deletar</button>
+        </div>
+
+        <form id="form-delete" action="/products?_method=DELETE" method="post">
+            <input type="hidden" name="id" value="{{ product.id }}">
+        </form>
+
+    </form>
+</section>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        const formDelete = document.querySelector('#form-delete')
+
+        formDelete.addEventListener("submit", function (event) {
+            const confirmation = confirm("Deseja realmente deletar?")
+
+            if (!confirmation) {
+                event.preventDefault()
+            }
+        })
+    </script>
+{% endblock %}
