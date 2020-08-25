@@ -22,13 +22,14 @@ module.exports = {
             if (req.body[key] == "")
                 return res.send('Please fill in all fields.')
         }
-
+        
         let results = await Product.create(req.body)
+
         const productId = results.rows[0].id
 
         results = await Category.all()
         const categories = results.rows
 
-        res.render('products/create.njk', { productId, categories})
+        await res.render('products/create.njk', { productId, categories})
     },
 }
