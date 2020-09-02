@@ -21,15 +21,12 @@ module.exports = {
 
         for (let key of keys) {
             // req.body.avatar_url == ""
-            if (req.body[key] == "")
+            if (req.body[key] == "" && key != "removed_files")
                 return res.send('Please fill in all fields.')
         }
 
         if (req.files.length == 0)
             res.send('Please, send at least one image')
-
-
-
         let results = await Product.create(req.body)
         const productId = results.rows[0].id
 
@@ -69,7 +66,26 @@ module.exports = {
         for (let key of keys) {
             // req.body.avatar_url == ""
             if (req.body[key] == "")
-                return res.send('Please fill in all fields.')
+                return res.send(req.body)
+        }
+
+        
+
+        if (req.files.length != 0) {
+            const newFilesPromise = req.files.map(file => File.create({...file, product_id: req.body.id}))
+
+            await Promise.all(newFilesPromise)
+        }
+
+        if (req.body.removed_files) {
+            // 1,2,3,
+            const removedFiles = req.body.removed_files.split(",") // [1,2,3,]
+            const lastIndex = removedFiles.length - 1
+            removedFiles.splice(lastIndex, 1) // [1,2,3]
+
+            const removedFilesPromise = removedFiles.map(id => File.delete(id))
+
+            await Promise.all(removedFilesPromise)
         }
 
         req.body.price = req.body.price.replace(/\D/g, "")
@@ -81,6 +97,8 @@ module.exports = {
         }
 
         await Product.update()
+
+        console.log(req.body)
 
         return res.redirect(`/products/${req.body.id}/edit`)
     },
