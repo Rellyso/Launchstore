@@ -36,6 +36,10 @@ module.exports = {
         return res.redirect(`/products/${productId}/edit`)
     },
 
+    async show(req, res) {
+        return res.render("products/show.njk")
+    },
+
     async edit(req, res) {
         let results = await Product.find(req.params.id)
         const product = results.rows[0]
@@ -56,7 +60,7 @@ module.exports = {
             ...file,
             src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
         }))
-        
+
         return res.render('products/edit.njk', { product, categories, files })
     },
 
@@ -65,7 +69,7 @@ module.exports = {
 
         for (let key of keys) {
             // req.body.avatar_url == ""
-            if (req.body[key] == "")
+            if (req.body[key] == "" && key != "removed_files")
                 return res.send(req.body)
         }
 
@@ -94,11 +98,11 @@ module.exports = {
             const oldProduct = await Product.find(req.body.id)
 
             req.body.old_price = oldProduct.rows[0].price
+
         }
+        
+        await Product.update(req.body)
 
-        await Product.update()
-
-        console.log(req.body)
 
         return res.redirect(`/products/${req.body.id}/edit`)
     },
