@@ -1,33 +1,18 @@
-const inputPrice = document.querySelector('input[name="price"]')
-
-inputPrice.addEventListener("keydown", (e) => {
-    setTimeout(() => {
-        let { value } = e.target
-
-        value = value.replace(/\D/g, "")
-
-        value = new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        }).format(value / 100)
-
-        e.target.value = value
-    }, 1)
-})
-
 const Mask = {
     apply(input, func) {
-        input.value = Mask[func](input.value) // == Mask.func(value)
-    },
-    format(value) {
         setTimeout(() => {
+            input.value = Mask[func](input.value) // == Mask.func(value)
+        }, 1)
+    },
+    formatBRL(value) {
             value = value.replace(/\D/g, "")
-    
-            return new Intl.NumberFormat('pt-BR', {
+
+            value = new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
                 currency: 'BRL'
             }).format(value / 100)
-        }, 1)
+
+            return value
     }
 }
 
@@ -41,17 +26,17 @@ const photosUpload = {
         photosUpload.input = event.target
         if (photosUpload.hasLimit(event)) return
 
-        Array.from(fileList).forEach( file => {
+        Array.from(fileList).forEach(file => {
 
             photosUpload.files.push(file)
-            
+
             const reader = new FileReader()
 
             reader.onload = () => {
                 const image = new Image()
                 image.src = reader.result
 
-                const div = photosUpload.getContainer(image)                
+                const div = photosUpload.getContainer(image)
                 photosUpload.preview.appendChild(div)
             }
 
@@ -62,7 +47,7 @@ const photosUpload = {
     },
     hasLimit(event) {
         const { uploadLimit, input, preview } = photosUpload
-        const {files: fileList } = input
+        const { files: fileList } = input
 
         if (fileList.length > uploadLimit) {
             alert(`Envie no máximo ${uploadLimit} fotos.`)
@@ -82,7 +67,7 @@ const photosUpload = {
             alert("Você atingiu o limite de fotos")
             event.preventDefault()
             return true
-        }        
+        }
 
         return false
     },
@@ -96,9 +81,9 @@ const photosUpload = {
     getContainer(image) {
         const div = document.createElement('div')
         div.classList.add('photo')
-        
+
         div.onclick = photosUpload.removePhoto
-        
+
         div.appendChild(image)
         div.appendChild(photosUpload.getRemoveButton())
 
@@ -129,10 +114,24 @@ const photosUpload = {
             const removedFiles = document.querySelector('input[name=removed_files]')
 
             if (removedFiles) {
-                 removedFiles.value += `${photoDiv.id},`
+                removedFiles.value += `${photoDiv.id},`
             }
         }
 
         photoDiv.remove()
+    }
+}
+
+const imageGallery = {
+    highlight: document.querySelector('.gallery .highlight > img'),
+    preview: document.querySelectorAll('.gallery-preview img'),
+    setImage(e) {
+        const { target } = e
+
+        imageGallery.preview.forEach(preview => preview.classList.remove('active'))
+
+        target.classList.add('active')
+
+        imageGallery.highlight.src = target.src
     }
 }
