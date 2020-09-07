@@ -424,6 +424,64 @@ form .item #photos-preview img {
 .product-single .gallery-preview img.active {
     opacity: 1;
 }
+
+/* lightbox product gallery */
+
+.product-single .highlight .lightbox-target {
+    width: 100%;
+    height: 100%;
+    
+    position: fixed;
+    
+    background-color: rgba(0, 0, 0, .7);
+    
+    overflow: hidden;
+    z-index: 100;
+
+    left: 0;
+    top: -100%;
+    opacity: 1;
+
+    transition: opacity .4s;
+}
+
+.highlight .lightbox-target img {
+    margin: auto;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 90%;
+    height: 90%;
+
+    object-fit: contain;
+
+    position: absolute;
+
+    background-color: white;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+
+.highlight .lightbox-close {
+    position: absolute;
+
+    width: 50px;
+    height: 50px;
+
+    top: -80px;
+    right: 0;
+
+    background: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: .4s;
+}
+
 /* product single info */
 
 .product-single .info {
