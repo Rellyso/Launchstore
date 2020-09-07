@@ -133,5 +133,25 @@ const imageGallery = {
         target.classList.add('active')
 
         imageGallery.highlight.src = target.src
+        lightBox.image.src = target.src
+
+    }
+}
+
+const lightBox = {
+    target: document.querySelector('.highlight .lightbox-target'),
+    image: document.querySelector('.highlight .lightbox-target img'),
+    closeButton: document.querySelector('.lightbox-close'),
+    open() {
+        lightBox.target.style.top = 0
+        lightBox.target.style.opacity = 1
+        lightBox.closeButton.style.top = 0
+    },
+    close() {
+        setTimeout(() => {
+            lightBox.target.style.top = "-100%"
+        }, 401)
+        lightBox.target.style.opacity = 0
+        lightBox.closeButton.style.top = "-80px"
     }
 }
