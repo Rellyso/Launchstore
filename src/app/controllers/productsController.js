@@ -98,8 +98,6 @@ module.exports = {
                 return res.send(req.body)
         }
 
-        
-
         if (req.files.length != 0) {
             const newFilesPromise = req.files.map(file => File.create({...file, product_id: req.body.id}))
 
@@ -108,7 +106,7 @@ module.exports = {
 
         if (req.body.removed_files) {
             // 1,2,3,
-            const removedFiles = req.body.removed_files.split(",") // [1,2,3,]
+            const removedFiles = req.body.removed_files.split(",") // [1,2,3,""]
             const lastIndex = removedFiles.length - 1
             removedFiles.splice(lastIndex, 1) // [1,2,3]
 
