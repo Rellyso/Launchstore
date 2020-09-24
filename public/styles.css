@@ -540,3 +540,64 @@ form .item #photos-preview img {
     font-size: 14px;
     letter-spacing: .4px;
 }
+
+/* SHOP */
+
+.shop h2 {
+    margin: 48px 0;
+}
+
+.shop .items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.items .product {
+    display: grid;
+
+    border-radius: 8px;
+    background-color: #fff;
+
+    box-shadow: 2px 3px 4px -3px rgba(0, 0, 0, .3);
+    
+    overflow: hidden;
+}
+
+.items .product .image {
+    padding-top: 56.25%;
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.shop .items h4 {
+    margin: 8px 0;
+
+    font-weight: 300;
+    color: #999;
+}
+
+.shop .items p {
+    color: #101010;
+    
+    margin-top: 8px;
+
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.shop .items .button {
+    margin: 0;
+}
+
+.shop .items .old-price {
+    color: #999;
+
+    margin: 4px 0;
+    padding: 0;
+
+    font-size: 14px;
+    text-decoration: line-through;
+}
