@@ -13,6 +13,44 @@ const Mask = {
             }).format(value / 100)
 
             return value
+    },
+    cpfCnpj(value) {
+        value = value.replace(/\D/g, "")
+
+        // check if is cpf or cnpj
+
+        if (value.length > 14) value = value.slice(0, -1)
+
+        if (value.length > 11) {
+            //cnpj -> 11222333000111
+
+            // 11.222.333/0001-11
+            value = value.replace(/(\d{2})(\d)/, "$1.$2")
+            value = value.replace(/(\d{3})(\d)/, "$1.$2")
+            value = value.replace(/(\d{3})(\d)/, "$1/$2")
+            value = value.replace(/(\d{4})(\d)/, "$1-$2")
+
+
+        } else {
+            //cpf -> 11122233344
+
+            value = value.replace(/(\d{3})(\d)/, "$1.$2")
+            value = value.replace(/(\d{3})(\d)/, "$1.$2")
+            value = value.replace(/(\d{3})(\d)/, "$1-$2")
+        }
+
+        return value;
+    },
+    cep(value) {
+        value = value.replace(/\D/g, "")
+
+        if (value.length > 8) 
+            value = value.slice(0, -1)
+
+        value = value.replace(/(\d{5})(\d)/, "$1-$2")
+        
+        
+        return value
     }
 }
 
@@ -153,5 +191,57 @@ const lightBox = {
         }, 401)
         lightBox.target.style.opacity = 0
         lightBox.closeButton.style.top = "-80px"
+    }
+}
+
+const Validate = {
+    apply(input, func) {
+        Validate.clearErrors(input)
+
+        let results = Validate[func](input.value) // == validate.func(value)
+
+        input.value = results.value
+
+        if (results.error) {
+            Validate.displayError(input, results.error)
+        }
+
+        // focar no campo, manter foco no input 
+    },
+    displayError(input, error) {
+        const div = document.createElement('div')
+        div.classList.add('error')
+        div.innerHTML = error
+
+        input.parentNode.appendChild(div)
+
+        input.focus()
+    },
+    clearErrors(input) {
+        const divError = input.parentNode.querySelector('.error')
+
+        if (divError)
+            divError.remove('error')
+    },
+    isEmail(value) {
+        let error = null
+
+        // ^ -> iniciar com
+        // () -> grupo, conjunto
+        // [] -> agrupamento de caracteres
+        // ? -> deixar expressão (ou agrupamento de expressões) facultativa
+        // + -> repetir expressão 1 ou + vezes
+        // * -> pode ter nenhum ou muitos (de 0 pra cima)
+        // {2,3} -> pode ter 2 ou 3 caracteres
+        const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+
+        // match() -> string tem que coincidir com uma expressão regular
+        if (!value.match(mailFormat))
+            error = "Email inválido"
+
+        return {
+            error,
+            value
+        }
     }
 }
