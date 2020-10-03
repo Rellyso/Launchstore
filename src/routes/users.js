@@ -21,7 +21,7 @@ const UserController = require('../app/controllers/UserController')
 
 // //Controlador de usuário
 routes.get('/register', UserController.registerForm)
-// routes.post('/register', UserController.post)
+routes.post('/register', UserController.post)
 
 // routes.get('/', UserController.show)
 // routes.put('/', UserController.update)
