@@ -236,7 +236,7 @@ const Validate = {
         const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
         // match() -> string tem que coincidir com uma expressão regular
-        if (!value.match(mailFormat))
+        if (!value.match(mailFormat) && value.length > 0)
             error = "Email inválido"
 
         return {
