@@ -142,7 +142,8 @@ nav.primary ul li a {
     transition: color .2s;
 }
 
-nav.primary ul li a:hover {
+nav.primary ul li a:hover,
+nav.primary ul li button:hover {
     color: var(--primary-color);
 }
 
