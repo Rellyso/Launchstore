@@ -13,7 +13,7 @@ module.exports = {
             INSERT INTO products (
                 category_id,
                 user_id,
-                name,]
+                name,
                 description,
                 old_price,
                 price,
