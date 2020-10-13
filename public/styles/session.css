@@ -1,8 +1,10 @@
-.login.container {
+.login.container,
+.password.container {
     max-width: 500px;
 }
 
-.login .fields {
+.login .fields,
+.password.container .fields {
     margin-bottom: 32px;
 }
 
