@@ -52,5 +52,20 @@ module.exports = {
                 error: 'Ocorreu um erro.'
             })
         }
+    },
+    async delete(req, res) {
+        try {
+            User.delete(req.body.id)
+            req.session.destroy()
+
+            return res.render("session/login", {
+                success: "Conta deletada com sucesso!"
+            })
+
+        } catch (err) {
+            return res.render("user/index", {
+                error: "Erro ao deletar sua conta"
+            })
+        }
     }
 }
