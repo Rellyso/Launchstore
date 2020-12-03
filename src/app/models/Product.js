@@ -1,6 +1,6 @@
 const Base = require('./Base')
 
-Base.init({ table: 'categories' })
+Base.init({ table: 'products' })
 
 module.exports = {
     ...Base,
