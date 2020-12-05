@@ -21,4 +21,8 @@ routes.get('/accounts', (req, res) => {
     return res.redirect('/users/login')
 })
 
+routes.get('/products', (req, res) => {
+    return res.redirect('/')
+})
+
 module.exports = routes
