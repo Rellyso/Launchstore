@@ -70,7 +70,7 @@ module.exports = {
             })
 
             return res.render('users/index', {
-                user: user,
+                user: req.body,
                 success: 'Usuário atualizado com sucesso!'
             })
 
@@ -84,7 +84,7 @@ module.exports = {
     },
     async delete(req, res) {
         try {
-            const Products = Product.findAll({where: {id: req.body.id}})
+            const products = await Product.findAll({where: {id: req.body.id}})
 
             // Pegar todas as imagens de cada produto
             const allFilesPromise = products.map(product => Product.files(product.id))
@@ -96,8 +96,8 @@ module.exports = {
             req.session.destroy()
 
             // Excluir todos os arquivos da pasta public
-            promiseResults.map(results => {
-                results.rows.map(file => {
+            promiseResults.map(files => {
+                files.map(file => {
                     try {
                         unlinkSync(file.path)
                     } catch (err) {
@@ -111,7 +111,8 @@ module.exports = {
             })
 
         } catch (err) {
-            return res.render("user/index", {
+            console.error(err)
+            return res.render("users/index", {
                 error: "Erro ao deletar sua conta"
             })
         }
