@@ -18,21 +18,6 @@ module.exports = {
 
     async post(req, res) {
         try {
-            const keys = Object.keys(req.body)
-
-            for (let key of keys) {
-                // req.body.avatar_url == ""
-                if (req.body[key] == "" && key != "removed_files")
-                    return res.send('Please fill in all fields.')
-            }
-
-            if (req.files.length == 0)
-                res.render('products/create', {
-                    error: 'Please, send at least one image',
-                    product: req.body,
-                    categories: (await Category.all()).rows
-                })
-
             let { category_id, name, description, old_price,
                 price, quantity, status } = req.body
 
@@ -98,17 +83,9 @@ module.exports = {
 
     async put(req, res) {
         try {
-            const keys = Object.keys(req.body)
-
-            for (let key of keys) {
-                // req.body.avatar_url == ""
-                if (req.body[key] == "" && key != "removed_files")
-                    return res.send(req.body)
-            }
-
             if (req.files.length != 0) {
                 const newFilesPromise = req.files.map(file =>
-                    File.create({ name: file.filename, path: file.path , product_id: req.body.id })
+                    File.create({ name: file.filename, path: file.path, product_id: req.body.id })
                 )
 
                 await Promise.all(newFilesPromise)
@@ -121,11 +98,11 @@ module.exports = {
                 removedFiles.splice(lastIndex, 1) // [1,2,3]
 
                 const removedFilesPromise = removedFiles.map(id => File.delete(id))
-                
+
                 await Promise.all(removedFilesPromise)
-                
+
                 console.log(removedFiles)
-                
+
                 removedFiles.map(async file => {
                     file = await File.find(Number.parseInt(file))
 
@@ -168,7 +145,7 @@ module.exports = {
     async delete(req, res) {
         try {
             const files = await Product.files(req.body.id)
-            
+
             await Product.delete(req.body.id)
 
             files.map(file => {
