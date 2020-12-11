@@ -15,19 +15,22 @@ routes.get('/login', isLoggedRedirectToUsers, SessionController.loginForm)
 routes.post('/login', SessionValidator.login ,SessionController.login)
 routes.post('/logout', SessionController.logout)
 
-// // reset password / forgot
+// reset password / forgot
 routes.get('/password-reset', SessionController.resetForm)
 routes.get('/forgot-password', SessionController.forgotForm)
 routes.post('/password-reset', SessionValidator.reset, SessionController.reset)
 routes.post('/forgot-password', SessionValidator.forgot, SessionController.forgot)
 
 
-// //Controlador de usuário
+//Controlador de usuário
 routes.get('/register', UserController.registerForm)
 routes.post('/', UserValidator.post, UserController.post)
 
 routes.get('/', onlyUsers, UserValidator.show, UserController.show)
 routes.put('/', UserValidator.update, UserController.update)
 routes.delete('/', UserController.delete)
+
+// ads
+routes.get('/ads', UserController.ads)
 
 module.exports = routes
