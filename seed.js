@@ -7,7 +7,7 @@ const Category = require('./src/app/models/Category')
 const File = require('./src/app/models/File')
 
 let usersIds = []
-let totalCategories = 4
+let totalCategories = 2
 let totalUsers = 3
 let totalProducts = 10
 
@@ -34,18 +34,18 @@ async function createUsers() {
     console.log(usersIds)
 }
 
-async function createCategories() {
-    let categories = []
+// async function createCategories() {
+//     let categories = []
 
-    while (categories.length < totalCategories) {
-        categories.push({
-            name: faker.name.title(),
-        })
-    }
+//     while (categories.length < totalCategories) {
+//         categories.push({
+//             name: faker.name.title(),
+//         })
+//     }
 
-    const categoriesPromise = categories.map( category => Category.create(category)) 
-    await Promise.all(categoriesPromise)
-}
+//     const categoriesPromise = categories.map( category => Category.create(category)) 
+//     await Promise.all(categoriesPromise)
+// }
 
 async function createProducts() {
     let products = []
@@ -84,7 +84,7 @@ async function createProducts() {
 
 async function init() {
     await createUsers()
-    await createCategories()
+    // await createCategories()
     await createProducts()
 }
 
