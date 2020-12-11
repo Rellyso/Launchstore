@@ -113,9 +113,11 @@ ON DELETE CASCADE;
 DELETE FROM products;
 DELETE FROM users;
 DELETE FROM files;
+DELETE FROM categories;
 
 
 -- restart sequence auto_increment from tables ids
 ALTER SEQUENCE products_id_seq RESTART WITH 1;
 ALTER SEQUENCE users_id_seq RESTART WITH 1;
 ALTER SEQUENCE files_id_seq RESTART WITH 1;
+ALTER SEQUENCE categories_id_seq RESTART WITH 1;	
