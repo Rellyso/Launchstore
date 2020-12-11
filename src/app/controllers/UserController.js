@@ -2,15 +2,15 @@ const { hash } = require('bcryptjs')
 const { unlinkSync } = require('fs')
 
 const User = require('../models/User')
+const Product = require('../models/Product')
+const LoadProductsService = require('../services/LoadServices')
 
 const { formatCep, formatCpfCnpj } = require('../../lib/utils')
-const Product = require('../models/Product')
 
 module.exports = {
     registerForm(req, res) {
         return res.render("users/register")
     },
-
     async show(req, res) {
 
         try {
@@ -25,7 +25,6 @@ module.exports = {
             console.error(error)
         }
     },
-
     async post(req, res) {
         try {
             let { name, email, password, cpf_cnpj, cep, address } = req.body
@@ -51,7 +50,6 @@ module.exports = {
             console.error(error);
         }
     },
-
     async update(req, res) {
         try {
             const { user } = req
@@ -84,7 +82,7 @@ module.exports = {
     },
     async delete(req, res) {
         try {
-            const products = await Product.findAll({where: {id: req.body.id}})
+            const products = await Product.findAll({ where: { id: req.body.id } })
 
             // Pegar todas as imagens de cada produto
             const allFilesPromise = products.map(product => Product.files(product.id))
@@ -105,7 +103,7 @@ module.exports = {
                     }
                 })
             })
-            
+
             return res.render("session/login", {
                 success: "Conta deletada com sucesso!"
             })
@@ -116,5 +114,12 @@ module.exports = {
                 error: "Erro ao deletar sua conta"
             })
         }
+    },
+    async ads(req, res) {
+        const products = await LoadProductsService.load('products', {
+            where: { user_id: req.session.userId }
+        })
+
+        return res.render('users/ads', { products })
     }
 }
