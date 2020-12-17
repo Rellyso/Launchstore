@@ -1,33 +1,29 @@
 {% extends "layout.njk"%}
 
+{% import "parts/cards.njk" as card %}
+
 {% block content %}
 
-    <section class="user-dashboard container form">
-        <form id="form-update" method="POST" action="/users?_method=PUT">
+    {% call card.render('Detalhes', 'users-dashboard container') %}
 
-            <div class="header">
-                <h3>Detalhes</h3>
-            </div>
+    <form id="form-update" method="POST" action="/users?_method=PUT">
+        <div class="fields">
+            {% include 'users/fields.njk' %}
 
-            <div class="fields">
-                {% include 'users/fields.njk' %}
-
-                <input type="hidden" name="id" value="{{ user.id }}">
-            </div>
-
-        </form>
-
-        <div class="submit-buttons-container">
-            <button form="form-update" type="submit" class="button edit">Atualizar</button>
-            <button form="form-delete" type="submit" class="button delete">Deletar</button>
-        </div>
-
-        <form id="form-delete" action="/users?_method=DELETE" method="post">
             <input type="hidden" name="id" value="{{ user.id }}">
-        </form>
-
+        </div>
     </form>
-</section>
+
+    <div class="submit-buttons-container">
+        <button form="form-update" type="submit" class="button edit">Atualizar</button>
+        <button form="form-delete" type="submit" class="button delete">Deletar</button>
+    </div>
+
+    <form id="form-delete" action="/users?_method=DELETE" method="post">
+        <input type="hidden" name="id" value="{{ user.id }}">
+    </form>
+
+    {% endcall %}
 {% endblock content %}
 
 {% block scripts %}
