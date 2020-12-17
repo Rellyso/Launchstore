@@ -1,33 +1,30 @@
 {% extends "layout.njk"%}
 
+{% import "parts/cards.njk" as card %}
+
 {% block content %}
 
-    <section class="container form">
-        <form id="form-update" method="POST" action="/products?_method=PUT" enctype="multipart/form-data">
+    {% call card.render('Editar produto', 'edit-product container') %}
+    <form id="form-update" method="POST" action="/products?_method=PUT" enctype="multipart/form-data">
 
-            <div class="header">
-                <h3>Editar produto</h3>
-            </div>
+        <div class="fields">
+            {% include 'products/fields.njk' %}
 
-            <div class="fields">
-                {% include 'products/fields.njk' %}
-
-                <input type="hidden" name="id" value="{{ product.id }}">
-            </div>
-
-        </form>
-
-        <div class="submit-buttons-container">
-            <button form="form-update" type="submit" class="button edit">Atualizar</button>
-            <button form="form-delete" type="submit" class="button delete">Deletar</button>
+            <input type="hidden" name="id" value="{{ product.id }}">
         </div>
 
-        <form id="form-delete" action="/products?_method=DELETE" method="post">
-            <input type="hidden" name="id" value="{{ product.id }}">
-        </form>
-
     </form>
-</section>
+
+    <div class="submit-buttons-container">
+        <button form="form-update" type="submit" class="button edit">Atualizar</button>
+        <button form="form-delete" type="submit" class="button delete">Deletar</button>
+    </div>
+
+    <form id="form-delete" action="/products?_method=DELETE" method="post">
+        <input type="hidden" name="id" value="{{ product.id }}">
+    </form>
+
+    {% endcall %}
 {% endblock content %}
 
 {% block scripts %}
