@@ -4,28 +4,25 @@
 
 {% block content %}
 
-{% call cards.render('Meus Anúncios', 'user-ads container') %}
+    {% call cards.render('Meus Anúncios', 'user-ads container') %}
     <div class="items">
         {% for product in products %}
-        <div class="item">
-            <div class="image"
-                style="background-image: url({{ product.img }})"
-            >
-            </div>
+            <div class="item">
+                <div class="image" style="background-image: url({{ product.img }})"></div>
 
-            <div class="info">
-                <div class="title">{{product.name}}</div>
-                <div class="title">{{product.formattedPrice}}</div>
-                <div class="title">{{product.formattedCreatedAt}}</div>
-            </div>
+                <div class="info">
+                    <div class="title">{{product.name}}</div>
+                    <div class="price">{{product.formattedPrice}}</div>
+                    <div class="published">Publicado em {{product.formattedCreatedAt}}</div>
 
-            <div class="actions">
-                <a href="/products/{{ product.id }}/edit">Editar</a>
-                <a href="/products/{{ product.id }}">Ver</a>
+                    <div class="actions">
+                        <a href="/products/{{ product.id }}/edit">Editar</a>
+                        <a href="/products/{{ product.id }}">Ver</a>
+                    </div>
+                </div>
             </div>
-        </div>
         {% endfor %}
     </div>
-{% endcall %}
-    
+    {% endcall %}
+
 {% endblock content %}
