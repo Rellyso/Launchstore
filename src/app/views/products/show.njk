@@ -1,26 +1,22 @@
-{% extends "layout.njk" %}
+{% extends "layout.njk"%}
+
+{% import "parts/cards.njk" as card %}
 
 {% block content %}
-<section class="product-single container">
+
+    {% call card.render('', 'product-single container') %}
 
     <div class="gallery">
         <div class="highlight">
             {% if not product.files[0] %}
-            <img src="http://placehold.it/500x500?text=PRODUTO SEM FOTO" alt="">
+                <img src="http://placehold.it/500x500?text=PRODUTO SEM FOTO" alt="">
             {% else %}
-            <img 
-                src="{{product.files[0].src}}" 
-                alt="{{product.files[0].name}}" 
-                onclick="lightBox.open()">
+                <img src="{{product.files[0].src}}" alt="{{product.files[0].name}}" onclick="lightBox.open()">
             {% endif %}
 
             <div class="lightbox-target">
                 <img src="{{product.files[0].src}}" alt="{{product.files[0].name}}">
-                <a 
-                    href="#" 
-                    class="lightbox-close"
-                    onclick="lightBox.close()"
-                    >
+                <a href="#" class="lightbox-close" onclick="lightBox.close()">
                     <i class="material-icons">
                         close
                     </i>
@@ -29,14 +25,7 @@
         </div>
         <div class="gallery-preview">
             {% for image in product.files %}
-                <img 
-                    src="{{image.src}}" 
-                    alt="{{image.name}}"
-                    {% if product.files.index0 == 0 %}
-                    class="active"
-                    {% endif %}}
-                    onclick="imageGallery.setImage(event)"
-                >
+                <img src="{{image.src}}" alt="{{image.name}}" {% if product.files.index0 == 0 %} class="active" {% endif %} }="}" onclick="imageGallery.setImage(event)">
             {% endfor %}
         </div>
     </div>
@@ -45,7 +34,10 @@
         <h1>{{product.name}}</h1>
 
         <div class="published">
-            Publicado em {{product.published.day}} às {{product.published.hour}}
+            Publicado em
+            {{product.published.day}}
+            às
+            {{product.published.hour}}
         </div>
 
         <div class="description">
@@ -60,7 +52,7 @@
                     <span class="old">{{product.formattedOldPrice}}</span>
                 {% endif %}
             </div>
-                
+
             <div class="buy">
                 {% if product.status === 0 %}
                     <p class="unavailable">Indisponível</p>
@@ -68,11 +60,14 @@
                 {% elseif product.quantity === 0 %}
                     <p class="unavailable">Fora de Estoque</p>
                 {% else %}
-                    <button class="button">Comprar</button>
+                <form action="/users/orders" method="post">
+                    <input type="hidden" name="id" value="{{ product.id }}">
+                    <button class="button" type="submit">Comprar</button>
+                </form>
                 {% endif %}
             </div>
         </div>
     </div>
-    
-</section>
+
+    {% endcall %}
 {% endblock content %}
