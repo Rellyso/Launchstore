@@ -52,20 +52,23 @@
                     <span class="old">{{product.formattedOldPrice}}</span>
                 {% endif %}
             </div>
+            {% if (session.userId) and (session.userId == product.user_id) %}
+                <p class="unavaiable">Você é o vendedor</p>
+            {% else %}
+                <div class="buy">
+                    {% if product.status === 0 %}
+                        <p class="unavailable">Indisponível</p>
 
-            <div class="buy">
-                {% if product.status === 0 %}
-                    <p class="unavailable">Indisponível</p>
-
-                {% elseif product.quantity === 0 %}
-                    <p class="unavailable">Fora de Estoque</p>
-                {% else %}
-                <form action="/users/orders" method="post">
-                    <input type="hidden" name="id" value="{{ product.id }}">
-                    <button class="button" type="submit">Comprar</button>
-                </form>
-                {% endif %}
-            </div>
+                    {% elseif product.quantity === 0 %}
+                        <p class="unavailable">Fora de Estoque</p>
+                    {% else %}
+                    <form action="/users/orders" method="post">
+                        <input type="hidden" name="id" value="{{ product.id }}">
+                        <button class="button" type="submit">Comprar</button>
+                    </form>
+                    {% endif %}
+                </div>
+            {% endif %}
         </div>
     </div>
 
