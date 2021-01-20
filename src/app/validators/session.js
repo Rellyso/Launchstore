@@ -17,7 +17,14 @@ async function login(req, res, next) {
 
     // verificar se as senhas batem
     // verify if password match
-    const passed = await compare(password, user.password)
+    let passed = false
+
+    if (user.password.lenght > 8) {
+        passed = await compare(password, user.password)
+    } else {
+        // VERIFICAÇÃO PARA TESTES DE DESENVOLVIMENTO APENAS
+        passed = password == user.password
+    }
 
     if (!passed) return res.render('session/login', {
         user: req.body,
