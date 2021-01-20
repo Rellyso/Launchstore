@@ -11,6 +11,12 @@ let totalCategories = 2
 let totalUsers = 3
 let totalProducts = 10
 
+// criando categorias de forma manual
+let manualCategories = [
+    'comida',
+    'eletrônico'
+]
+
 async function createUsers() {
     const users = []
     const password = await hash('1111', 8)
@@ -34,18 +40,26 @@ async function createUsers() {
     console.log(usersIds)
 }
 
-// async function createCategories() {
-//     let categories = []
+async function createCategories() {
+    let categories = []
 
-//     while (categories.length < totalCategories) {
-//         categories.push({
-//             name: faker.name.title(),
-//         })
-//     }
+    // while (categories.length < totalCategories) {
+    //     categories.push({
+    //         // name: faker.name.title(),
+    //     })
+    // }
 
-//     const categoriesPromise = categories.map( category => Category.create(category)) 
-//     await Promise.all(categoriesPromise)
-// }
+    
+    // criando categorias de forma manual
+    manualCategories.forEach(category => {
+        categories.push({
+            name: category,
+        })
+    });
+
+    const categoriesPromise = categories.map(category => Category.create(category))
+    await Promise.all(categoriesPromise)
+}
 
 async function createProducts() {
     let products = []
@@ -84,7 +98,7 @@ async function createProducts() {
 
 async function init() {
     await createUsers()
-    // await createCategories()
+    await createCategories()
     await createProducts()
 }
 
