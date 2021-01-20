@@ -1,6 +1,8 @@
+-- para excluir e recriar esquema em cascata 
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 
+-- excluir e recriar caso exista a base de dados launchstoredb
 DROP DATABASE IF EXISTS launchstoredb;
 CREATE DATABASE launchstoredb;
 
