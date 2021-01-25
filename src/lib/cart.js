@@ -18,7 +18,7 @@ const Cart = {
     },
     addOne(product){
         // se já existe o produto no carrinho
-        let inCart = this.items.find(item => item.product.id == product.id)
+        let inCart = this.getCartItem(product.id)
 
         // se não existe
         if (!inCart) {
@@ -52,7 +52,7 @@ const Cart = {
     },
     removeOne(productId){
         // pega o produto a ser removido a partir do id e coloca na variável inCart
-        const inCart = this.items.find(item => item.product.id == productId)
+        let inCart = this.getCartItem(productId)
 
         // se não existir o produto com o id a ser removido, retorna o carrinho sem alterações
         if (!inCart) return this
@@ -82,39 +82,25 @@ const Cart = {
         return this
         
     },
-    delete(productId){},
+    delete(productId){
+        let inCart = this.getCartItem(productId)
+
+        if (!inCart) return this
+
+        if (this.items.length > 0) {
+            this.total.quantity -= inCart.quantity 
+            this.total.price -= (inCart.product.price * inCart.quantity) 
+            this.total.formattedPrice = formatPrice(this.total.price)
+        }
+
+        this.items = this.items.filter(item => 
+            item.product.id != inCart.product.id)
+
+        return this
+    },
+    getCartItem(productId) {
+        return this.items.find(item => item.product.id == productId)
+    }
 }
-
-const product = {
-    id: 1,
-    price: 199,
-    quantity: 2,
-}
-
-const product2 = {
-    id: 2,
-    price: 300,
-    quantity: 2,
-}
-
-console.log('add first cart item')
-let oldCart = Cart.init().addOne(product)
-console.log(oldCart)
-
-console.log('add second cart item')
-oldCart = Cart.init(oldCart).addOne(product)
-console.log(oldCart)
-
-console.log('add third cart item')
-oldCart = Cart.init(oldCart).addOne(product2)
-console.log(oldCart)
-
-console.log('remove one cart item')
-oldCart = Cart.init(oldCart).removeOne(product.id)
-console.log(oldCart)
-
-console.log('remove one cart item 2')
-oldCart = Cart.init(oldCart).removeOne(product.id)
-console.log(oldCart)
 
 module.exports = Cart
