@@ -45,7 +45,7 @@ const Cart = {
 
         // atualiza carrinho
         this.total.quantity++
-        this.total.price = this.total.price + inCart.product.price
+        this.total.price += parseFloat(inCart.product.price)
         this.total.formattedPrice = formatPrice(this.total.price)
 
         return this
@@ -64,7 +64,7 @@ const Cart = {
 
         // e remover do total do carrinho:
         this.total.quantity--
-        this.total.price -= inCart.product.price
+        this.total.price -= parseFloat(inCart.product.price)
         this.total.formattedPrice = formatPrice(this.total.price)
 
         // se quantidade for igual a zero
