@@ -26,11 +26,11 @@ const email = (seller, product, buyer) => `
 module.exports = {
     async index(req, res) {
         // pegar os pedidos do comprador
-        let orders = await Order.findAll({where: { id: req.session.userId }})
+        let orders = await Order.findAll({where: { buyer_id: req.session.userId }})
 
         const getOrdersPromise = orders.map(async order => {
             // detalhes do produto
-            order.product = await LoadProductsService.load('products', {
+            order.product = await LoadProductsService.load('product', {
                 where: { id: order.product_id }
             })
 
