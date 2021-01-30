@@ -1,6 +1,6 @@
 const { unlinkSync } = require('fs')
 
-const LoadProductsService = require('../services/LoadServices')
+const LoadProductsService = require('../services/LoadProductService')
 const Category = require('../models/Category')
 const Product = require('../models/Product')
 const File = require('../models/File')

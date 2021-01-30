@@ -1,4 +1,4 @@
-const LoadProductsService = require('../services/LoadServices')
+const LoadProductsService = require('../services/LoadProductService')
 
 module.exports = {
     async index(req, res) {

@@ -3,7 +3,7 @@ const { unlinkSync } = require('fs')
 
 const User = require('../models/User')
 const Product = require('../models/Product')
-const LoadProductsService = require('../services/LoadServices')
+const LoadProductsService = require('../services/LoadProductService')
 
 const { formatCep, formatCpfCnpj } = require('../../lib/utils')
 
