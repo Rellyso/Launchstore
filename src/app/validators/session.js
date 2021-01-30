@@ -19,7 +19,7 @@ async function login(req, res, next) {
     // verify if password match
     let passed = false
 
-    if (user.password.lenght > 8) {
+    if (user.password.length > 8) {
         passed = await compare(password, user.password)
     } else {
         // VERIFICAÇÃO PARA TESTES DE DESENVOLVIMENTO APENAS
